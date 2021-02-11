@@ -4,7 +4,7 @@
 
     <div class="container my-4 py-2">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVehiculo">
                     Añadir Vehículo
                 </button>
@@ -12,9 +12,13 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-8">
+            <div class="col-lg-4 order-lg-2 order-md-1">
+                <input type="search" class="form-control mt-4" @keyup.enter="searchVehicle()" placeholder="Buscar vehículo por placa, nombre o cédula" v-model="params.search">
+            </div>
 
-                <p class="title">
+            <div class="col-lg-8 order-lg-1 order-md-2">
+
+                <p class="title pt-4">
                     Vehículos registrados
                 </p>
 
@@ -53,9 +57,7 @@
                     No hay vehiculos para mostrar
                 </div>
             </div>
-            <div class="col-md-4">
-                <input type="search" class="form-control" @keyup.enter="searchVehicle()" placeholder="Buscar vehículo por placa, nombre o cédula" v-model="params.search">
-            </div>
+
         </div>
     </div>
 

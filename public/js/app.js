@@ -2084,6 +2084,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -39380,11 +39382,47 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "row mt-4" }, [
+          _c("div", { staticClass: "col-lg-4 order-lg-2 order-md-1" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.params.search,
+                  expression: "params.search"
+                }
+              ],
+              staticClass: "form-control mt-4",
+              attrs: {
+                type: "search",
+                placeholder: "Buscar vehículo por placa, nombre o cédula"
+              },
+              domProps: { value: _vm.params.search },
+              on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.searchVehicle()
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.params, "search", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-md-8" },
+            { staticClass: "col-lg-8 order-lg-1 order-md-2" },
             [
-              _c("p", { staticClass: "title" }, [
+              _c("p", { staticClass: "title pt-4" }, [
                 _vm._v(
                   "\n                    Vehículos registrados\n                "
                 )
@@ -39529,43 +39567,7 @@ var render = function() {
                 : _vm._e()
             ],
             2
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.params.search,
-                  expression: "params.search"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "search",
-                placeholder: "Buscar vehículo por placa, nombre o cédula"
-              },
-              domProps: { value: _vm.params.search },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.searchVehicle()
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.params, "search", $event.target.value)
-                }
-              }
-            })
-          ])
+          )
         ])
       ]),
       _vm._v(" "),
@@ -39580,7 +39582,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "col-lg-3" }, [
         _c(
           "button",
           {
