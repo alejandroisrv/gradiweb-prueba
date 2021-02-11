@@ -1953,6 +1953,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.alert.text = "Se ha añadido el vehículo correctamente";
         setTimeout(function () {
           $("#modalVehiculo").modal('hide');
+          _this.alert.type = '';
+          _this.alert.text = '';
         }, 220);
       })["catch"](function (err) {
         _this.alert.type = "error";
@@ -2080,6 +2082,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2091,6 +2095,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       params: {
         search: ''
       },
+      searchEnable: false,
       vehicleSearch: ''
     };
   },
@@ -2110,12 +2115,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var arr = [['2018-12-01', 'AM', 'ID123', 5000], ['2018-12-01', 'AM', 'ID545', 7000], ['2018-12-01', 'PM', 'ID545', 3000], ['2018-12-02', 'AM', 'ID545', 7000]];
     console.log(this.ordenarArreglo(arr));
   },
+  watch: {
+    "params.search": function paramsSearch(value) {
+      if (value == '') {
+        this.showAll();
+      }
+    }
+  },
   methods: {
     ordenarArreglo: function ordenarArreglo(arr) {
       var arregloOrdenado = arr.reduce(function (acc, el) {
         return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, el[0], acc[el[0]] ? Object.assign(acc[el[0]], _defineProperty({}, el[1], acc[el[0]][el[1]] ? el[3] + acc[el[0]][el[1]] : el[3])) : _defineProperty({}, el[1], el[3])));
       }, {});
       return arregloOrdenado;
+    },
+    showAll: function showAll() {
+      this.searchEnable = false;
+      this.vehicleSearch = '';
+      this.params.search = '';
+      this.getVehicleByBrands();
     },
     toggleVehiclesByBrand: function toggleVehiclesByBrand(item) {
       Vue.set(item, 'show', !item.show);
@@ -2135,8 +2153,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 2:
                 rs = _context.sent;
                 _this2.items = rs.data;
+                _this2.searchEnable = false;
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -2153,14 +2172,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                if (!(_this3.params.search == '')) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                _this3.showAll();
+
+                return _context2.abrupt("return", false);
+
+              case 3:
+                _context2.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/vehicles?search=".concat(_this3.params.search));
 
-              case 2:
+              case 5:
                 rs = _context2.sent;
-                _this3.vehicleSearch = rs.data;
+                _this3.vehicleSearch = Object.keys(rs.data).length == 0 ? '' : rs.data;
+                _this3.searchEnable = true;
 
-              case 4:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -39352,7 +39382,7 @@ var render = function() {
         _c("div", { staticClass: "row mt-4" }, [
           _c(
             "div",
-            { staticClass: "col-md-9" },
+            { staticClass: "col-md-8" },
             [
               _c("p", { staticClass: "title" }, [
                 _vm._v(
@@ -39360,8 +39390,27 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _vm.vehicleSearch != ""
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-dark col-12 mb-2",
+                      on: {
+                        click: function($event) {
+                          return _vm.showAll()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Mostrar todos\n                "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _vm._l(_vm.items, function(item) {
-                return _vm.vehicleSearch == ""
+                return !_vm.searchEnable
                   ? _c("div", { key: item.id, staticClass: "card" }, [
                       _c("div", { staticClass: "card-header" }, [
                         _c("h5", { staticClass: "mb-0" }, [
@@ -39402,14 +39451,14 @@ var render = function() {
                                       _vm._s(vehicle.model) +
                                       " " +
                                       _vm._s(vehicle.placa) +
-                                      " Propietario: "
+                                      " "
                                   ),
                                   _c(
-                                    "span",
+                                    "small",
                                     { staticClass: "font-weight-bold" },
                                     [
                                       _vm._v(
-                                        " " +
+                                        " Propietario: " +
                                           _vm._s(vehicle.owner.full_name) +
                                           " " +
                                           _vm._s(vehicle.owner.document) +
@@ -39427,34 +39476,8 @@ var render = function() {
                   : _vm._e()
               }),
               _vm._v(" "),
-              _vm.items.length == 0
-                ? _c("div", { staticClass: "alert alert-warning" }, [
-                    _vm._v(
-                      "\n                    No hay vehiculos para mostrar\n                "
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.vehicleSearch != ""
-                ? _c("div", { staticClass: "card text-left" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light",
-                        on: {
-                          click: function($event) {
-                            _vm.vehicleSearch = ""
-                            _vm.params.search = ""
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Mostrar todos\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
+              _vm.searchEnable && _vm.vehicleSearch != ""
+                ? _c("div", { staticClass: "card mt-2" }, [
                     _c("div", { staticClass: "card-body" }, [
                       _c(
                         "p",
@@ -39482,15 +39505,33 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", { staticClass: "mb-1" }, [
                         _vm._v(" Placa: " + _vm._s(_vm.vehicleSearch.placa))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "mb-1 font-weight-bold" }, [
+                        _vm._v(
+                          " Propietario: " +
+                            _vm._s(_vm.vehicleSearch.owner.full_name) +
+                            " " +
+                            _vm._s(_vm.vehicleSearch.owner.document)
+                        )
                       ])
                     ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              (_vm.searchEnable && _vm.vehicleSearch == "") ||
+              _vm.items.length == 0
+                ? _c("div", { staticClass: "alert alert-warning" }, [
+                    _vm._v(
+                      "\n                    No hay vehiculos para mostrar\n                "
+                    )
                   ])
                 : _vm._e()
             ],
             2
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 pr-0" }, [
+          _c("div", { staticClass: "col-md-4" }, [
             _c("input", {
               directives: [
                 {
@@ -39502,7 +39543,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
-                type: "text",
+                type: "search",
                 placeholder: "Buscar vehículo por placa, nombre o cédula"
               },
               domProps: { value: _vm.params.search },
@@ -39539,7 +39580,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-3" }, [
+      _c("div", { staticClass: "col-md-3" }, [
         _c(
           "button",
           {

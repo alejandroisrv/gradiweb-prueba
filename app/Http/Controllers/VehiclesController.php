@@ -21,7 +21,7 @@ class VehiclesController extends Controller
 
         $brands = Brand::withCount('vehicles')->with('vehicles.owner')->get();
 
-        $brands->map(fn ($brand) => $brand->name = ucfirst($brand->name));
+        $brands->map(fn ($brand) => $brand->name = ucfirst(strtolower($brand->name)));
 
         return response()->json($brands);
     }

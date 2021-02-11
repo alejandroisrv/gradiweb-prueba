@@ -98,6 +98,8 @@ export default {
 
                 setTimeout(() => {
                     $("#modalVehiculo").modal('hide');
+                    this.alert.type = ''
+                    this.alert.text = ''
                 }, 220);
 
             }).catch(err => {
