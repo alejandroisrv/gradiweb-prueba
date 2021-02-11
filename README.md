@@ -35,12 +35,6 @@ Estando en la misma ubicación, ejecutamos lo siguiente:
 npm install
 ```
 
-## Ejecutando las pruebas ⚙️
-
-```
-php artisan test
-```
-
 ## Despliegue 📦
 
 ```
@@ -49,8 +43,8 @@ php artisan serve
 
 ## Construido con 🛠️
 
-* [Laravel](https://laravel.com/docs/8.x/installation) - El framework web usado
-* [Vue JS](https://maven.apache.org/) - Manejador de dependencias
+* [Laravel](https://laravel.com/docs/8.x/installation) - El framework del backend usado
+* [Vue JS](https://maven.apache.org/) - El framework del frontend usado 
 
 ## Autor ✒️
 
