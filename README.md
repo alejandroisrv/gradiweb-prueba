@@ -9,7 +9,7 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 ### Requerimientos 📋
 
 - Composer (`https://getcomposer.org/download/`)
-- NodeJS (Versión utilizada `https://nodejs.org/download/release/v8.7.0/`)
+- NodeJS (Versión utilizada `https://nodejs.org/download/release/v12.20.2/`)
 - Git (`https://git-scm.com/downloads`)
 
 ### Instalación 🔧
